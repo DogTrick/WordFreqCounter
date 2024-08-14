@@ -1,14 +1,34 @@
 ## Introduction
 A tiny word frequency counter.
 
-## Setup
-Make sure GHC >= 9.4.8:
+## Requirement
+GHC >= 9.4.8
+
+## Build
+Build up to an executable.
 ```bash
-ghc -O2 -o <exe_name> ./main.hs
+make
 ```
 
-## Usage
+## Clean
+Delete intermediate files.
 ```bash
-cat <text_file> | ./<exe_name>
+make clean
 ```
 
+## Example
+Feed test file to program.
+```bash
+make test
+```
+This yields
+```
+word           times
+--------------------
+the            51
+you            32
+to             27
+of             18
+i              18
+...
+```
