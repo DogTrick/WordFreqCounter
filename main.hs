@@ -27,12 +27,6 @@ trieToDict (Node i m) = let ks = M.keys m
                             acc = [("", i) | i > 0]
                          in L.foldr (\k a -> let (Just t) = M.lookup k m in a ++ L.map (\(s, i') -> (k:s, i')) (trieToDict t)) acc ks
 
-qsort :: [(String, Int)] -> [(String, Int)]
-qsort [] = []
-qsort (x@(w,n):xs) = qsort (L.filter (\y -> snd y > n) xs) 
-                  ++ [x] 
-                  ++ qsort (L.filter (\y -> snd y <= n) xs)
-
 formatOutput :: (String, Int) -> IO ()
 formatOutput (w, n) = let l = length w
                        in putStrLn $ w ++ replicate (15 - l) ' ' ++ show n 
@@ -40,7 +34,7 @@ formatOutput (w, n) = let l = length w
 main :: IO ()
 main = do
     ctx <- getContents
-    let r = qsort $ trieToDict $ contextToTrie ctx
+    let r = L.sortOn snd $ trieToDict $ contextToTrie ctx
     let g = "\n" ++ "word" ++ replicate 11 ' ' ++ "times\n" ++ replicate 20 '-'
     putStrLn g
     mapM_ formatOutput r
