@@ -12,7 +12,7 @@ insertToTrie :: String -> Trie -> Trie
 insertToTrie "" (Node i m) = Node (i + 1) m
 insertToTrie (x:xs) (Node i m) = case M.lookup x m of 
                                    Nothing -> Node i $ M.insert x (insertToTrie xs $ Node 0 M.empty) m
-                                   Just n -> Node i $ M.adjust (insertToTrie xs) x m
+                                   Just n -> Node i $ M.insert x (insertToTrie xs n) m
 
 contextToTrie :: String -> Trie
 contextToTrie = aux (Node 0 M.empty)
@@ -27,7 +27,7 @@ contextToTrie = aux (Node 0 M.empty)
 trieToDict :: Trie -> [(String, Int)]
 trieToDict (Node i m) = let ks = M.keys m
                          in L.foldr (\k a -> let (Just t) = M.lookup k m 
-                                              in a ++ L.map (\(s, i') -> (k:s, i')) (trieToDict t)) [("", i) | i > 0] ks
+                                              in a ++ L.map (\(s, i') -> (k : s, i')) (trieToDict t)) [("", i) | i > 0] ks
 
 formatOutput :: (String, Int) -> IO ()
 formatOutput (w, n) = let l = length w
