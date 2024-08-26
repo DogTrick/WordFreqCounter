@@ -25,10 +25,11 @@ This yields
 ```
 word           times
 --------------------
-the            51
-you            32
-to             27
+...
+and            15
 of             18
 i              18
-...
+to             27
+you            32
+the            51
 ```
